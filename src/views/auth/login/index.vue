@@ -5,7 +5,7 @@
  */
 
 import { useLogin } from './hooks/useLogin';
-import type { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus';
 
 // 他妈的表单
 const ruleFormRef = ref<FormInstance>();
