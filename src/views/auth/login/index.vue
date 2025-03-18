@@ -4,72 +4,16 @@
  * @author Prk<code@imprk.me>
  */
 
-import type { LoginForm } from '@/types/auth/login';
-import type { FormInstance, FormRules } from 'element-plus';
+import { useLogin } from './hooks/useLogin';
+import type { FormInstance } from 'element-plus'
 
 // 他妈的表单
 const ruleFormRef = ref<FormInstance>();
 
-/**
- * 校验规则
- * @author Prk<code@imprk.me>
- */
-const rules = reactive<FormRules<typeof form>>({
-    username: [
-        {
-            validator: (rule: any, value: string, callback: any): void => {
-                if (!value) {
-                    callback(new Error('请输入用户名'));
-                    return void 0;
-                }
-
-                callback();
-            },
-            trigger: 'blur'
-        }
-    ],
-    password: [
-        {
-            validator: (rule: any, value: string, callback: any): void => {
-                if (!value) {
-                    callback(new Error('请输入密码'));
-                    return void 0;
-                }
-
-                callback();
-            },
-            trigger: 'blur'
-        }
-    ],
-});
-
-/**
- * 规则表单
- * @author Prk<code@imprk.me>
- */
-const form = reactive<LoginForm>({
-    username: '',
-    password: '',
-    remember: false
-});
-
-/**
- * 提交表单
- * @author Prk<code@imprk.me>
- * 
- * @param {FormInstance | undefined} formElement 表单实例
- * 
- * @return {void} 不会返回任何信息
- */
-const submitForm = (formElement: FormInstance | undefined): void => {
-    if (!formElement) return void 0;
-
-    formElement.validate((valid: boolean = false): void => {
-        if (!valid) return void 0;
-
-        console.log('submit!')
-    });
-};
+const {
+    form, rules, loading,
+    submitForm
+} = useLogin();
 </script>
 
 <template>
@@ -91,14 +35,17 @@ const submitForm = (formElement: FormInstance | undefined): void => {
                 size="large"
                 v-model="form.username"
                 placeholder="登录用户名"
+                :disabled="loading"
             />
         </ElFormItem>
 
         <ElFormItem class="mb-22px" prop="password">
             <ElInput
                 size="large"
+                type="password"
                 v-model="form.password"
                 placeholder="登录密码"
+                :disabled="loading"
             />
         </ElFormItem>
 
@@ -107,10 +54,18 @@ const submitForm = (formElement: FormInstance | undefined): void => {
             class="mr-0"
             v-model="form.remember"
             label="使我保持登录状态"
+            :disabled="loading"
         />
 
         <ElFormItem class="mt-24px ml-0 mr-0 mb-0">
-            <ElButton class="w-full" type="primary" size="large">
+            <ElButton
+                class="w-full"
+                type="primary"
+                size="large"
+                :loading="loading"
+                nativeType="submit"
+                @click="submitForm(ruleFormRef)"
+            >
                 登录
             </ElButton>
         </ElFormItem>
