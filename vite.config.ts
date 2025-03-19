@@ -46,5 +46,13 @@ export default defineConfig({
                 )
             )
         }
+    },
+    server: {
+        proxy: {
+            '/admin/api.php': {
+                target: 'http://127.0.0.1:17896',
+                changeOrigin: true
+            }
+        }
     }
 });

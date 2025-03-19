@@ -5,6 +5,14 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
+NProgress.configure({
+    easing: 'ease',
+    speed: 500
+});
+
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL), // 使用 Hash 路由的原因是尽量让用户不要过多的配置服务器
     routes: [
@@ -36,6 +44,18 @@ const router = createRouter({
             ]
         }
     ]
+});
+
+router.beforeEach((to, from): void => {
+    NProgress.start();
+});
+
+router.afterEach((): void => {
+    NProgress.done();
+});
+
+router.onError((): void => {
+    NProgress.done();
 });
 
 export default router;

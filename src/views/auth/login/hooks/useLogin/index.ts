@@ -3,6 +3,8 @@
  * @author Prk<code@imprk.me>
  */
 
+import { authLogin } from '@/api/auth';
+import { ElMessageBox } from 'element-plus';
 import type { LoginForm } from '@/types/auth/login';
 import type { FormInstance, FormRules } from 'element-plus';
 
@@ -83,13 +85,15 @@ export const useLogin = () => {
         loading.value = true;
 
         try {
-            await new Promise((resolve) => {
-                setTimeout((): void => {
-                    console.log('登录成功');
-                    resolve(void 0);
-                }, 3000);
+            const response = await authLogin(form.username, form.password);
+            if (response.data) {
+                // 登录成功
+            }
+        } catch(error) {
+            ElMessageBox.alert('账号或密码不正确。', '提示', {
+                type: 'error',
+                confirmButtonText: '确定'
             });
-        } finally {
             loading.value = false;
         }
     };

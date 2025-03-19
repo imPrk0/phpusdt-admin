@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@unocss/reset": "66.1.0-beta.5",
+    "axios": "^1.8.3",
     "element-plus": "^2.9.6",
+    "nprogress": "^0.2.0",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
     "vue": "^3.5.13",
@@ -23,6 +25,7 @@
     "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.9",
+    "@types/nprogress": "^0.2.3",
     "@unocss/preset-wind4": "66.1.0-beta.5",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
